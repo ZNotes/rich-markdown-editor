@@ -1,8 +1,8 @@
 import Editor from "./index";
 import debounce from "lodash/debounce";
-import { Props } from "..";
+import {Props} from "..";
 import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import {Meta, Story} from "@storybook/react/types-6-0";
 
 export default {
   title: "Editor",
@@ -184,9 +184,10 @@ ReadOnlyWriteCheckboxes.args = {
 
 export const Persisted = Template.bind({});
 Persisted.args = {
+  dark: true,
   defaultValue:
-    localStorage.getItem("saved") ||
-    `# Persisted
+      localStorage.getItem("saved") ||
+      `# Persisted
   
 The contents of this editor are persisted to local storage on change (edit and reload)`,
   onChange: debounce(value => {

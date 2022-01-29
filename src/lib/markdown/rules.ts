@@ -1,9 +1,10 @@
-import markdownit, { PluginSimple } from "markdown-it";
+import markdownit, {PluginSimple} from "markdown-it";
+import math_plugin from "./math_katex";
 
 export default function rules({
-  rules = {},
-  plugins = [],
-}: {
+                                rules = {},
+                                plugins = [],
+                              }: {
   rules?: Record<string, any>;
   plugins?: PluginSimple[];
 }) {
@@ -14,5 +15,6 @@ export default function rules({
     ...rules,
   });
   plugins.forEach(plugin => markdownIt.use(plugin));
+  markdownIt.use(math_plugin)
   return markdownIt;
 }

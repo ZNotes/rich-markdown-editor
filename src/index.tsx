@@ -1,22 +1,22 @@
 /* global window File Promise */
 import * as React from "react";
 import memoize from "lodash/memoize";
-import { EditorState, Selection, Plugin } from "prosemirror-state";
-import { dropCursor } from "prosemirror-dropcursor";
-import { gapCursor } from "prosemirror-gapcursor";
-import { MarkdownParser, MarkdownSerializer } from "prosemirror-markdown";
-import { EditorView } from "prosemirror-view";
-import { Schema, NodeSpec, MarkSpec, Slice } from "prosemirror-model";
-import { inputRules, InputRule } from "prosemirror-inputrules";
-import { keymap } from "prosemirror-keymap";
-import { baseKeymap } from "prosemirror-commands";
-import { selectColumn, selectRow, selectTable } from "prosemirror-utils";
-import { ThemeProvider } from "styled-components";
-import { light as lightTheme, dark as darkTheme } from "./styles/theme";
+import {EditorState, Plugin, Selection} from "prosemirror-state";
+import {dropCursor} from "prosemirror-dropcursor";
+import {gapCursor} from "prosemirror-gapcursor";
+import {MarkdownParser, MarkdownSerializer} from "prosemirror-markdown";
+import {EditorView} from "prosemirror-view";
+import {MarkSpec, NodeSpec, Schema, Slice} from "prosemirror-model";
+import {InputRule, inputRules} from "prosemirror-inputrules";
+import {keymap} from "prosemirror-keymap";
+import {baseKeymap} from "prosemirror-commands";
+import {selectColumn, selectRow, selectTable} from "prosemirror-utils";
+import {ThemeProvider} from "styled-components";
+import {dark as darkTheme, light as lightTheme} from "./styles/theme";
 import baseDictionary from "./dictionary";
 import Flex from "./components/Flex";
-import { SearchResult } from "./components/LinkEditor";
-import { EmbedDescriptor, ToastType } from "./types";
+import {SearchResult} from "./components/LinkEditor";
+import {EmbedDescriptor, ToastType} from "./types";
 import SelectionToolbar from "./components/SelectionToolbar";
 import BlockMenu from "./components/BlockMenu";
 import EmojiMenu from "./components/EmojiMenu";
@@ -26,9 +26,10 @@ import Extension from "./lib/Extension";
 import ExtensionManager from "./lib/ExtensionManager";
 import ComponentView from "./lib/ComponentView";
 import headingToSlug from "./lib/headingToSlug";
+import {mathSerializer} from "@benrbray/prosemirror-math";
 
 // styles
-import { StyledEditor } from "./styles/editor";
+import {StyledEditor} from "./styles/editor";
 
 // nodes
 import ReactNode from "./nodes/ReactNode";
@@ -47,6 +48,8 @@ import Heading from "./nodes/Heading";
 import HorizontalRule from "./nodes/HorizontalRule";
 import Image from "./nodes/Image";
 import ListItem from "./nodes/ListItem";
+import Math from "./nodes/Math";
+import MathDisplay from "./nodes/MathDisplay";
 import Notice from "./nodes/Notice";
 import OrderedList from "./nodes/OrderedList";
 import Paragraph from "./nodes/Paragraph";
@@ -76,7 +79,7 @@ import Placeholder from "./plugins/Placeholder";
 import SmartText from "./plugins/SmartText";
 import TrailingNode from "./plugins/TrailingNode";
 import PasteHandler from "./plugins/PasteHandler";
-import { PluginSimple } from "markdown-it";
+import {PluginSimple} from "markdown-it";
 
 export { schema, parser, serializer, renderToHtml } from "./server";
 
@@ -362,6 +365,8 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
           new Highlight(),
           new Italic(),
           new TemplatePlaceholder(),
+          new Math(),
+          new MathDisplay(),
           new Underline(),
           new Link({
             onKeyboardShortcut: this.handleOpenLinkMenu,
@@ -542,10 +547,11 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       editable: () => !this.props.readOnly,
       nodeViews: this.nodeViews,
       handleDOMEvents: this.props.handleDOMEvents,
-      dispatchTransaction: function(transaction) {
+      clipboardTextSerializer: slice => mathSerializer.serializeSlice(slice),
+      dispatchTransaction: function (transaction) {
         // callback is bound to have the view instance as its this binding
-        const { state, transactions } = this.state.applyTransaction(
-          transaction
+        const {state, transactions} = this.state.applyTransaction(
+            transaction
         );
 
         this.updateState(state);

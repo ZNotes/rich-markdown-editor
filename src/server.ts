@@ -1,4 +1,4 @@
-import { Schema } from "prosemirror-model";
+import {Schema} from "prosemirror-model";
 import ExtensionManager from "./lib/ExtensionManager";
 import render from "./lib/renderToHtml";
 
@@ -18,6 +18,8 @@ import Heading from "./nodes/Heading";
 import HorizontalRule from "./nodes/HorizontalRule";
 import Image from "./nodes/Image";
 import ListItem from "./nodes/ListItem";
+import Math from "./nodes/Math";
+import MathDisplay from "./nodes/MathDisplay";
 import Notice from "./nodes/Notice";
 import OrderedList from "./nodes/OrderedList";
 import Paragraph from "./nodes/Paragraph";
@@ -65,6 +67,8 @@ const extensions = new ExtensionManager([
   new Link(),
   new Strikethrough(),
   new TemplatePlaceholder(),
+  new Math(),
+  new MathDisplay(),
   new Underline(),
   new OrderedList(),
 ]);
