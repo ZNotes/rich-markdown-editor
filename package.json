@@ -25,9 +25,11 @@
     ]
   },
   "dependencies": {
+    "@benrbray/prosemirror-math": "^0.2.2",
     "copy-to-clipboard": "^3.0.8",
     "fuzzy-search": "^3.2.1",
     "gemoji": "6.x",
+    "katex": "^0.15.2",
     "lodash": "^4.17.11",
     "markdown-it": "^12.2.0",
     "markdown-it-container": "^3.0.0",
