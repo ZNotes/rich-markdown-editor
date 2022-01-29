@@ -2,7 +2,7 @@
 
 
 
-# rich-markdown-editor
+# znotes-editor
 
 A React and [Prosemirror](https://prosemirror.net/) based editor that powers [Outline](http://getoutline.com) and can also be used for displaying content in a read-only fashion.
 The editor is WYSIWYG and includes formatting tools whilst retaining the ability to write markdown shortcuts inline and output plain Markdown. See the **[Live demo storybook](https://rich-markdown-editor-demo.onrender.com/)**.
@@ -16,13 +16,13 @@ The editor is WYSIWYG and includes formatting tools whilst retaining the ability
 ### Install
 
 ```bash
-yarn add rich-markdown-editor
+yarn add znotes-editor
 ```
 
 or
 
 ```bash
-npm install rich-markdown-editor
+npm install znotes-editor
 ```
 
 Note that `react`, `react-dom`, and `styled-components` are _required_ peer dependencies.
@@ -30,7 +30,7 @@ Note that `react`, `react-dom`, and `styled-components` are _required_ peer depe
 ### Import
 
 ```javascript
-import Editor from "rich-markdown-editor";
+import Editor from "znotes-editor";
 
 <Editor
   defaultValue="Hello world!"
