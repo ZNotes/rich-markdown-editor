@@ -7,8 +7,9 @@ import {
     REGEX_INLINE_MATH_DOLLARS,
 } from "@benrbray/prosemirror-math";
 import Node from "./Node";
-import "katex/dist/katex.min.css";
-import "@benrbray/prosemirror-math/style/math.css";
+// Uncomment the following when working locally! | Clashes with main website and caused errors
+// import "katex/dist/katex.min.css";
+// import "@benrbray/prosemirror-math/style/math.css";
 
 export default class Math extends Node {
     get name() {
