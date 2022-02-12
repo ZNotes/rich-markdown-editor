@@ -336,7 +336,16 @@ export default class Image extends Node {
 
         return true;
       },
-      deleteImage: () => (state, dispatch) => {
+      deleteImage: () => async (state, dispatch) => {
+        const { node } = state.selection;
+
+        const image = await fetch(node.attrs.src);
+        const { deleteImage } = this.editor.props;
+
+        if (deleteImage) {
+          await deleteImage(image.url);
+        }
+
         dispatch(state.tr.deleteSelection());
         return true;
       },
