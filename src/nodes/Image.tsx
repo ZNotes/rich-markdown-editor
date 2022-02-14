@@ -186,7 +186,7 @@ export default class Image extends Node {
     };
   }
 
-  handleKeyDown = ({ node, getPos }) => event => {
+  handleKeyDown = ({ node, getPos }) => async event => {
     // Pressing Enter in the caption field should move the cursor/selection
     // below the image
     if (event.key === "Enter") {
@@ -207,6 +207,14 @@ export default class Image extends Node {
       const { view } = this.editor;
       const $pos = view.state.doc.resolve(getPos());
       const tr = view.state.tr.setSelection(new NodeSelection($pos));
+
+      const image = await fetch(node.attrs.src);
+
+      const { deleteImage } = this.editor.props;
+
+      if (deleteImage) {
+        await deleteImage(image.url);
+      }
       view.dispatch(tr.deleteSelection());
       view.focus();
       return;
